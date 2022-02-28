@@ -1,7 +1,7 @@
 import React from 'react'
-import { Create } from './Create.js'
-import { Edit } from './Edit.js'
-import { List } from './List.js'
+import { Create } from './Create'
+//import { Edit } from './Edit.js'
+import { UserList } from './UserList'
 
 import {
   Routes,
@@ -10,6 +10,11 @@ import {
 } from "react-router-dom";
 
 
+/*       <Route path="/edit" component={Edit}/>
+<li className='navbar-item'>
+<Link to="/edit/:id" className='nav-link'>Edit</Link>
+</li>
+*/
 
 function App() {
   return (
@@ -20,17 +25,14 @@ function App() {
             <Link to="/" className='nav-link'>Home</Link>
           </li>
           <li className='navbar-item'>
-            <Link to="/edit/:id" className='nav-link'>Edit</Link>
-          </li>
-          <li className='navbar-item'>
             <Link to="/create" className='nav-link'>Create</Link>
           </li>
         </ul>
       </nav>
       <Routes>
-        <Route exact path="/" component={List}/>
-        <Route path="/edit" component={Edit}/>
-        <Route path="/create" component={Create}/>
+        <Route exact path="/" element={<UserList/>}/>
+        <Route path="/create" element={<Create/>}/>
+
       </Routes>
     </div>
   );
