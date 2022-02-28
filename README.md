@@ -1,3 +1,19 @@
+create virtual environment with virtualenv
+
+React
+npm start
+
+Flask
+. venv/bin/activate
+pip install Flask
+
+initialize db?
+sqlite3 test.db (should already be created upon running flask)
+
+
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
