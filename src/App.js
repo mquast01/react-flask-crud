@@ -34,7 +34,7 @@ function App() {
         <Route exact path="/" element={<UserList/>}/>
         <Route path="/create" element={<Create/>}/>
         <Route path="/edit/:id" element={<Edit/>}/>
-        <Route path="/:id" element={<View/>}/>
+        <Route path="/view/:id" element={<View/>}/>
 
       </Routes>
     </div>

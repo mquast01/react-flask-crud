@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 
 export const UserList = () => {
     const [userList, setUserList] = useState([])
@@ -9,7 +10,6 @@ export const UserList = () => {
             .then(data => {
                 console.log(data)
                 setUserList(data)
-                //console.log(userList)
             });
     }, [])
 
@@ -24,6 +24,8 @@ export const UserList = () => {
                         <th scope="col">Name</th>
                         <th scope="col">Id</th>
                         <th scope="col">Points</th>
+                        <th scope="col">#</th>
+                        <th scope="col">#</th>
                     </thead>
                     <tbody>
                         {userList.map((user, index) => (
@@ -32,6 +34,8 @@ export const UserList = () => {
                                 <td>{user.Name}</td>
                                 <td>{user.Id}</td>
                                 <td>{user.Points}</td>
+                                <td><Link to={`/view/${user.Id}`} className='nav-link'>View</Link></td>  
+                                <td><Link to={`/edit/${user.Id}`} className='nav-link'>Edit</Link></td>   
                             </tr>
                         ))}
                     </tbody>

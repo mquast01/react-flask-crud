@@ -8,26 +8,27 @@ app = Flask(__name__)
 CORS(app)
 
 @app.route("/")
-def hello_world():
-    #for user in query_db('SELECT * FROM USERS'):
-        #print(user['Name'], 'has the id', user['Id'])
+def view_users():
     return jsonify(query_db('SELECT * FROM users'))
+
+@app.route("/view/<int:user_id>")
+def view(user_id):
+    return jsonify(query_db('SELECT * FROM users WHERE id=?', [user_id]))
 
 @app.route('/edit/<int:user_id>', methods=['GET', 'POST'])
 def edit(user_id):
-    #for user in query_db('select Id from users where Id = ?', [user_id]):
-    #    print(user['Name'], 'has the id', user['Id'])
     if request.method == 'POST':
-        print(request.form)
-        name = request.form.get('Name')
-        id = request.form.get('Id')
-        points = request.form.get('Points') 
-        return '''
-                  <h1>The Name value is: {}</h1>
-                  <h1>The Id value is: {}</h1>
-                  <h1>The Points value is: {}</h1>'''.format(name, id, points)
+        #TODO: handle parsing errors/empty inputs 
+        data = request.get_json()
+        name = data['Name']
+        id = data['Id']
+        points = data['Points']
+
+        query_db('UPDATE users SET Name = ?, Points = ? WHERE Id = ?', [name, points, id])
+        get_db().commit()
+        return 
     
-    #return jsonify(query_db('select * from users where Id=?', [user_id], one=True))
+    #maybe delete get method 
     return '''
               <form method="POST">
                   <div><label>Name: <input type="text" name="Name"></label></div>
@@ -38,26 +39,19 @@ def edit(user_id):
 
 @app.route('/create', methods=['GET', 'POST'])
 def create():
-    #for user in query_db('select Id from users where Id = ?', [user_id]):
-    #    print(user['Name'], 'has the id', user['Id'])
+
     if request.method == 'POST':
-        #data = request.data.decode('utf8')
-        #data = json.loads(data)
+
         data = request.get_json()
         print(data)
         name = data['Name']
         id = data['Id']
         points = data['Points'] 
-        #//print(request.method)
-        #print(request.form)
+
         query_db('INSERT INTO users (Name, Id, Points) VALUES (?, ?, ?)', [name, id, points])
         get_db().commit()
-        return '''
-                  <h1>The Name value is: {}</h1>
-                  <h1>The Id value is: {}</h1>
-                  <h1>The Points value is: {}</h1>'''.format(name, id, points)
-    
-    #return jsonify(query_db('select * from users where Id=?', [user_id], one=True))
+        return 
+    #maybe delete get method
     return '''
               <form method="POST">
                   <div><label>Name: <input type="text" name="Name"></label></div>
