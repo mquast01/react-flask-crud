@@ -1,7 +1,8 @@
 import React from 'react'
 import { Create } from './Create'
-//import { Edit } from './Edit.js'
+import { Edit } from './Edit.js'
 import { UserList } from './UserList'
+import { View } from './View'
 
 import {
   Routes,
@@ -32,6 +33,8 @@ function App() {
       <Routes>
         <Route exact path="/" element={<UserList/>}/>
         <Route path="/create" element={<Create/>}/>
+        <Route path="/edit/:id" element={<Edit/>}/>
+        <Route path="/:id" element={<View/>}/>
 
       </Routes>
     </div>

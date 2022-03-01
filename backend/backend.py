@@ -1,20 +1,24 @@
 import sqlite3
 from flask import Flask, g, jsonify, request
+from flask_cors import CORS
+import json
 DATABASE = 'test.db'
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route("/")
 def hello_world():
-    for user in query_db('SELECT * FROM USERS'):
-        print(user['Name'], 'has the id', user['Id'])
-    return jsonify(query_db('SELECT * FROM USERS'))
+    #for user in query_db('SELECT * FROM USERS'):
+        #print(user['Name'], 'has the id', user['Id'])
+    return jsonify(query_db('SELECT * FROM users'))
 
 @app.route('/edit/<int:user_id>', methods=['GET', 'POST'])
 def edit(user_id):
     #for user in query_db('select Id from users where Id = ?', [user_id]):
     #    print(user['Name'], 'has the id', user['Id'])
     if request.method == 'POST':
+        print(request.form)
         name = request.form.get('Name')
         id = request.form.get('Id')
         points = request.form.get('Points') 
@@ -32,14 +36,20 @@ def edit(user_id):
                   <input type="submit" value="Submit">
               </form>'''
 
-@app.route('/create/', methods=['GET', 'POST'])
+@app.route('/create', methods=['GET', 'POST'])
 def create():
     #for user in query_db('select Id from users where Id = ?', [user_id]):
     #    print(user['Name'], 'has the id', user['Id'])
     if request.method == 'POST':
-        name = request.form.get('Name')
-        id = request.form.get('Id')
-        points = request.form.get('Points') 
+        #data = request.data.decode('utf8')
+        #data = json.loads(data)
+        data = request.get_json()
+        print(data)
+        name = data['Name']
+        id = data['Id']
+        points = data['Points'] 
+        #//print(request.method)
+        #print(request.form)
         query_db('INSERT INTO users (Name, Id, Points) VALUES (?, ?, ?)', [name, id, points])
         get_db().commit()
         return '''
