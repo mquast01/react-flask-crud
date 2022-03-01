@@ -10,13 +10,6 @@ import {
   Link
 } from "react-router-dom";
 
-
-/*       <Route path="/edit" component={Edit}/>
-<li className='navbar-item'>
-<Link to="/edit/:id" className='nav-link'>Edit</Link>
-</li>
-*/
-
 function App() {
   return (
     <div>
@@ -27,6 +20,11 @@ function App() {
           </li>
           <li className='navbar-item'>
             <Link to="/create" className='nav-link'>Create</Link>
+          </li>
+        </ul>
+        <ul className="navbar-nav ms-auto">
+          <li className='navbar-item'>
+            Matthew Quast 447
           </li>
         </ul>
       </nav>

@@ -1,15 +1,20 @@
-create virtual environment with virtualenv
+cd 447hw
 
-React
-npm start
-
-Flask
+virtualenv venv
 . venv/bin/activate
-pip install Flask
+pip install -r requirements.txt
+npm install
 
-initialize db?
-sqlite3 test.db (should already be created upon running flask)
 
+frontend:
+npm start
+Visit http://localhost:3000
+
+backend:
+cd backend
+export FLASK_APP=backend
+flask run
+Visit http://localhost:5000 for backend endpoints
 
 
 

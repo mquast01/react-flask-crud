@@ -15,8 +15,8 @@ export const UserList = () => {
 
 
     return (
-
         <div className="container">
+            <h3>User List</h3>
             <div>
                 <table className="table table-striped">
                     <thead className="table-light">
