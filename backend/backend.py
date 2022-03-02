@@ -26,7 +26,7 @@ def edit(user_id):
 
         query_db('UPDATE users SET Name = ?, Points = ? WHERE Id = ?', [name, points, id])
         get_db().commit()
-        return 
+        return 'OK'
     
     #maybe delete get method 
     return '''
@@ -50,7 +50,7 @@ def create():
 
         query_db('INSERT INTO users (Name, Id, Points) VALUES (?, ?, ?)', [name, id, points])
         get_db().commit()
-        return 
+        return 'OK'
     #maybe delete get method
     return '''
               <form method="POST">
@@ -59,6 +59,13 @@ def create():
                   <div><label>Points: <input type="text" name="Points"></label></div>
                   <input type="submit" value="Submit">
               </form>'''
+
+@app.route("/delete/<int:user_id>", methods=['POST'])
+def delete(user_id):
+    print(user_id)
+    query_db('DELETE FROM users WHERE id=?', [user_id])
+    get_db().commit()
+    return
 
 def query_db(query, args=(), one=False):
     cur = get_db().execute(query, args)

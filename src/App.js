@@ -3,6 +3,7 @@ import { Create } from './Create'
 import { Edit } from './Edit.js'
 import { UserList } from './UserList'
 import { View } from './View'
+import { Delete } from './Delete'
 
 import {
   Routes,
@@ -33,6 +34,7 @@ function App() {
         <Route path="/create" element={<Create/>}/>
         <Route path="/edit/:id" element={<Edit/>}/>
         <Route path="/view/:id" element={<View/>}/>
+        <Route path="/delete/:id" element={<Delete/>}/>
 
       </Routes>
     </div>

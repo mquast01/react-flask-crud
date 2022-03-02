@@ -25,6 +25,7 @@ export const View = () => {
                         <th scope="col">Id</th>
                         <th scope="col">Points</th>
                         <th scope="col">#</th>
+                        <th scope="col">#</th>
                     </thead>
                     <tbody>
                         {user.map((user, index) => (
@@ -33,7 +34,9 @@ export const View = () => {
                                 <td>{user.Name}</td>
                                 <td>{user.Id}</td>
                                 <td>{user.Points}</td>
-                                <td><Link to={`/edit/${user.Id}`} className='nav-link'>Edit</Link></td>                         
+                                <td><Link to={`/edit/${user.Id}`} className='nav-link'>Edit</Link></td>  
+                                <td><Link to={`/delete/${user.Id}`} className='nav-link'>Delete</Link></td>
+                       
                             </tr>
                         ))}
                     </tbody>

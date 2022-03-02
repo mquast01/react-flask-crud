@@ -1,20 +1,25 @@
 cd 447hw
 
-virtualenv venv
-. venv/bin/activate
-pip install -r requirements.txt
-npm install
+INSTALL DEPENDENCIES/VENV:
+bash ./run.sh
 
-
-frontend:
+START FRONTEND
 npm start
-Visit http://localhost:3000
 
-backend:
+
+
+START DATABASE
+. venv/bin/activate
+cd backend
+sqlite3 test.db
+sqlite> .read schema.sql
+
+START BACKEND
 cd backend
 export FLASK_APP=backend
 flask run
-Visit http://localhost:5000 for backend endpoints
+
+
 
 
 
