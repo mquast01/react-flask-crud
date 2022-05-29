@@ -35,7 +35,6 @@ function App() {
         <Route path="/edit/:id" element={<Edit/>}/>
         <Route path="/view/:id" element={<View/>}/>
         <Route path="/delete/:id" element={<Delete/>}/>
-
       </Routes>
     </div>
   );

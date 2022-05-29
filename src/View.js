@@ -15,17 +15,18 @@ export const View = () => {
                 setUser(data)
             });
     }, [])
-    return (
+    return (        
         <div className="container">
+            
             <div>
                 <table className="table table-striped">
                     <thead className="table-light">
-                        <th scope="col">#</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Id</th>
-                        <th scope="col">Points</th>
-                        <th scope="col">#</th>
-                        <th scope="col">#</th>
+                        <tr>#</tr>
+                        <tr>Name</tr>
+                        <tr>Id</tr>
+                        <tr>Points</tr>
+                        <tr>#</tr>
+                        <tr>#</tr>
                     </thead>
                     <tbody>
                         {user.map((user, index) => (
@@ -36,7 +37,6 @@ export const View = () => {
                                 <td>{user.Points}</td>
                                 <td><Link to={`/edit/${user.Id}`} className='nav-link'>Edit</Link></td>  
                                 <td><Link to={`/delete/${user.Id}`} className='nav-link'>Delete</Link></td>
-                       
                             </tr>
                         ))}
                     </tbody>
