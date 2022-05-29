@@ -1,4 +1,6 @@
-cd 447hw
+SMALL CRUDAPP PROJECT USING REACT + FLASK FOR A COURSE HW
+
+cd react-flask-crud
 
 INSTALL DEPENDENCIES/VENV:
 bash ./run.sh
