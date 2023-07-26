@@ -1,34 +1,42 @@
-import React from 'react'
+import { React, useState } from 'react'
 import { Create } from './Create'
-import { Edit } from './Edit.js'
+import { Edit } from './Edit'
 import { UserList } from './UserList'
 import { View } from './View'
 import { Delete } from './Delete'
 
+import Container from 'react-bootstrap/Container';
+import Navbar from 'react-bootstrap/Navbar'
+import Nav from 'react-bootstrap/Nav'
+
 import {
   Routes,
-  Route,
-  Link
+  Route
 } from "react-router-dom";
 
 function App() {
+  const [createShow, setCreateShow] = useState(false);
+
   return (
     <div>
-      <nav className='navbar bg-light navbar-expand-lg navbar-light'>
-        <ul className='navbar-nav mr-auto'>
-          <li className='navbar-item'>
-            <Link to="/" className='nav-link'>Home</Link>
-          </li>
-          <li className='navbar-item'>
-            <Link to="/create" className='nav-link'>Create</Link>
-          </li>
-        </ul>
-        <ul className="navbar-nav ms-auto">
-          <li className='navbar-item'>
-            Matthew Quast 447
-          </li>
-        </ul>
-      </nav>
+      <Navbar expand="lg" className="bg-body-tertiary">
+      <Container>
+        <Navbar.Brand href="/">CRUD</Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="me-auto">
+            <Nav.Link href="/">Home</Nav.Link>
+            <Nav.Link onClick={(e) => {
+              e.preventDefault()
+              setCreateShow(true)
+            }}>
+              Create
+              <Create show={createShow} onHide={() => setCreateShow(false)}/>
+            </Nav.Link>
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
       <Routes>
         <Route exact path="/" element={<UserList/>}/>
         <Route path="/create" element={<Create/>}/>

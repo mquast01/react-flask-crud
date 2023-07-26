@@ -1,70 +1,87 @@
-import { React, useState, useEffect }  from 'react'
+import { React, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { useParams } from 'react-router-dom';
 
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
+import Form from 'react-bootstrap/Form';
 
-export const Edit = () => {
-    let { id } = useParams()
+export const Edit = ({ userProp }) => {
+    const { register, handleSubmit } = useForm();
+    const [show, setShow] = useState(false);
 
-    const {register, handleSubmit} = useForm({
-        defaultValues: {
-            Id: id
-        }
-    })
-    const [user, setUser] = useState([])
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
-    //React Hook useEffect has missing dependencies: 'id' and 'user'. Either include them or remove the dependency array
-    useEffect(() => {
-        fetch('http://localhost:5000/view/' + id)
-            .then(response => response.json())
-            .then(data => {
-                console.log(data)
-                setUser(data[0])
-                console.log(user)
+    const onSubmit = data => {
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'},
+            body: JSON.stringify(data)
+        };
+        console.log(requestOptions.body)
+        fetch(process.env.REACT_APP_API_ADDRESS + '/edit/' + userProp.id, requestOptions)
+            .then(response => {
+            console.log('Success:', response);
+            })
+            .catch((error) => {
+            console.error('Error:', error);
             });
-    }, [])
-    //TODO: Handle state problems in form w/ default
+        handleClose();
+    }
+
     return (
-        <div className="container">
-            <div className='mt-3'><h3>Edit User</h3></div>
-            <form onSubmit={handleSubmit((data) => {
-                // Simple POST request with a JSON body using fetch 
-                const requestOptions = {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'},
-                    body: JSON.stringify(data)
-                };
-                console.log(requestOptions.body)
-                fetch('http://localhost:5000/edit/' + id, requestOptions)
-                    .then(response => response.json())
-                    .then(data => {
-                    console.log('Success:', data);
-                    })
-                    .catch((error) => {
-                    console.error('Error:', error);
-                    });
-            })}>
-                <div className="form-group">
-                    <label htmlFor="Name">
-                        Name:
-                    </label>
-                    <input className="form-control" type="text" {...register("Name")} id="Name" defaultValue={user.Name}/>
-                    
-                    <label htmlFor="Id">
-                        Id:
-                    </label>
-                    <input className="form-control" type="number" defaultValue={user.Id} disabled/>
-                    
-                    <label htmlFor="Score">
-                    Score:
-                    </label>
-                    <input className="form-control" type="number" min="0" {...register("Points")} id="Score" defaultValue={user.Points} />
-                </div>
-                <div className="form-group">
-                    <button type="submit" className="btn btn-primary">Update User</button>
-                </div>
-            </form>
-        </div>
+        <>
+            <Button variant="primary" onClick={handleShow}>
+                Edit
+            </Button>
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Editing for {userProp.username}</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form>
+                        <Form.Group className="mb-3" controlId="formBasicEmail">
+                            <Form.Label>Email address</Form.Label>
+                            <Form.Control 
+                                {...register("email")}
+                                type="email" 
+                                placeholder="Enter email" 
+                                defaultValue={userProp.email}
+                            />
+                            <Form.Text className="text-muted">
+                                We'll share your email with everyone.
+                            </Form.Text>
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="formBasicUsername">
+                            <Form.Label>Username</Form.Label>
+                            <Form.Control 
+                                {...register("username")}
+                                type="Username" 
+                                placeholder="Username" 
+                                defaultValue={userProp.username}
+                            />
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="formBasicNickname">
+                            <Form.Label>Nickname</Form.Label>
+                            <Form.Control 
+                                {...register("nickname")}
+                                type="nickname" 
+                                placeholder="Nickname" 
+                                defaultValue={userProp.nickname}
+                            />
+                        </Form.Group>
+                    </Form>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Close
+                    </Button>
+                    <Button variant="primary" onClick={handleSubmit(onSubmit)}>
+                        Save Changes
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+        </>
     );
 };
 
